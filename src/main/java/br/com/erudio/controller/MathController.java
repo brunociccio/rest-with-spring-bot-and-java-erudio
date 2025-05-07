@@ -4,24 +4,59 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.erudio.exception.UnsupportedMathOperationException;
+
 @RestController
 @RequestMapping("/math")
 public class MathController {
 
-    @RequestMapping("/sum/{numberOne}/{numberTwo}")
-    public Double sum(
+    @RequestMapping("/soma/{numberOne}/{numberTwo}")
+    public Double soma(
             @PathVariable("numberOne") String numberOne,
             @PathVariable("numberTwo") String numberTwo) {
 
         if (!isNumeric(numberOne) || !isNumeric(numberTwo))
-            throw new IllegalArgumentException("Please provide numeric values");
+            throw new UnsupportedMathOperationException("Please set a numeric value!");
 
         return convertToDouble(numberOne) + convertToDouble(numberTwo);
     }
 
+    @RequestMapping("/divisao/{numberOne}/{numberTwo}")
+    public Double divisao(
+            @PathVariable("numberOne") String numberOne,
+            @PathVariable("numberTwo") String numberTwo) {
+
+        if (!isNumeric(numberOne) || !isNumeric(numberTwo))
+            throw new UnsupportedMathOperationException("Please set a numeric value!");
+
+        return convertToDouble(numberOne) / convertToDouble(numberTwo);
+    }
+
+    @RequestMapping("/multiplicacao/{numberOne}/{numberTwo}")
+    public Double multiplicacao(
+            @PathVariable("numberOne") String numberOne,
+            @PathVariable("numberTwo") String numberTwo) {
+
+        if (!isNumeric(numberOne) || !isNumeric(numberTwo))
+            throw new UnsupportedMathOperationException("Please set a numeric value!");
+
+        return convertToDouble(numberOne) * convertToDouble(numberTwo);
+    }
+
+    @RequestMapping("/subtracao/{numberOne}/{numberTwo}")
+    public Double subtracao(
+            @PathVariable("numberOne") String numberOne,
+            @PathVariable("numberTwo") String numberTwo) {
+
+        if (!isNumeric(numberOne) || !isNumeric(numberTwo))
+            throw new UnsupportedMathOperationException("Please set a numeric value!");
+
+        return convertToDouble(numberOne) - convertToDouble(numberTwo);
+    }
+
     private double convertToDouble(String strNumber) {
         if (strNumber == null || strNumber.isEmpty())
-            throw new IllegalArgumentException("Invalid input");
+            throw new UnsupportedMathOperationException("Invalid input");
         String number = strNumber.replace(",", ".");
         return Double.parseDouble(number);
     }
