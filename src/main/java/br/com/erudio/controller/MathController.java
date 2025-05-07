@@ -54,6 +54,26 @@ public class MathController {
         return convertToDouble(numberOne) - convertToDouble(numberTwo);
     }
 
+    @RequestMapping("/media/{numberOne}/{numberTwo}")
+    public Double media(
+            @PathVariable("numberOne") String numberOne,
+            @PathVariable("numberTwo") String numberTwo) {
+
+        if (!isNumeric(numberOne) || !isNumeric(numberTwo))
+            throw new UnsupportedMathOperationException("Please set a numeric value!");
+
+        return (convertToDouble(numberOne) - convertToDouble(numberTwo)) / 2;
+    }
+
+    @RequestMapping("/media/{numberOne}/{numberTwo}")
+    public Double raizquadrada(
+            @PathVariable("number") String number)
+            throws Exception {
+        if (!isNumeric("number"))
+            throw new UnsupportedMathOperationException("Please set a numeric value!");
+        return Math.sqrt(convertToDouble(number));
+    }
+
     private double convertToDouble(String strNumber) {
         if (strNumber == null || strNumber.isEmpty())
             throw new UnsupportedMathOperationException("Invalid input");
